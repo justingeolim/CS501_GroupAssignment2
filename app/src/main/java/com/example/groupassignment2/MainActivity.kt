@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -50,15 +51,16 @@ class MainActivity : ComponentActivity() {
 fun DemoScreen(modifier: Modifier = Modifier) {
 
     var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+    var selectedColor by remember { mutableStateOf("Red") }
 
     //API reference: https://developer.android.com/reference/android/graphics/Color
     val backgroundColor = Color(
         //opaque-ness. Can change later for lighter color
         alpha = 1f,
 
-        red = sliderPosition,
-        green = 0.5f,
-        blue = 1f - sliderPosition
+        red = if (selectedColor=="Red") sliderPosition else .5f,
+        green = if (selectedColor=="Green") sliderPosition else 0.5f,
+        blue = if (selectedColor=="Blue") sliderPosition else .5f
     )
 
     //Reference from: https://developer.android.com/develop/ui/compose/modifiers
@@ -87,6 +89,23 @@ fun DemoScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "Value: ${"%.2f".format(sliderPosition)}")
+
+        Spacer(modifier = Modifier.height(48.dp))
+
+        Text("Selected Color: $selectedColor")
+
+        ElevatedButton(
+            onClick = {
+                when (selectedColor) {
+                    "Red" -> selectedColor = "Green"
+                    "Green" -> selectedColor = "Blue"
+                    "Blue" -> selectedColor = "Red"
+                }
+            },
+            modifier = Modifier.padding(top = 10.dp)
+        ) {
+            Text("Change Color")
+        }
     }
 }
 
@@ -98,7 +117,8 @@ fun ColorSlider(
     Slider(
         value = value,
         onValueChange = onValueChange,
-        valueRange = 0f..1f
+        valueRange = 0f..1f,
+        modifier = Modifier.padding(horizontal = 25.dp)
     )
 }
 
