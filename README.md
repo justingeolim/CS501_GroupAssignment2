@@ -21,3 +21,7 @@ Includes:
 2. Button that switches the selected RGB value when pressed.
 <img width="260" alt="image" src="https://github.com/user-attachments/assets/a034a015-cf16-4ac6-8bec-8c6da7c63e34" />
 <img width="260" alt="image" src="https://github.com/user-attachments/assets/9900048b-3567-49b1-8aaf-1c4e3f5a400e" />
+
+3. A slider enable/disable toggle was added using a Switch component.
+![img.png](img.png)
+![img_1.png](img_1.png)

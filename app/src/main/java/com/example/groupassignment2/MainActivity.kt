@@ -28,6 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.mutableFloatStateOf
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Switch
+
+
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.*
 
@@ -52,6 +58,8 @@ fun DemoScreen(modifier: Modifier = Modifier) {
 
     var sliderPosition by remember { mutableFloatStateOf(0.5f) }
     var selectedColor by remember { mutableStateOf("Red") }
+    var sliderEnabled by remember { mutableStateOf(true) }
+
 
     //API reference: https://developer.android.com/reference/android/graphics/Color
     val backgroundColor = Color(
@@ -81,9 +89,21 @@ fun DemoScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(40.dp))
 
+        ToggleRow(
+            enabled = sliderEnabled,
+            onEnabledChange = { sliderEnabled = it }
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = if (sliderEnabled) "Status: slider is enabled" else "Status: slider is disabled")
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+
         ColorSlider(
             value = sliderPosition,
-            onValueChange = { sliderPosition = it }
+            onValueChange = { if (sliderEnabled) sliderPosition = it }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -121,6 +141,26 @@ fun ColorSlider(
         modifier = Modifier.padding(horizontal = 25.dp)
     )
 }
+
+@Composable
+fun ToggleRow(
+    enabled: Boolean,
+    onEnabledChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth().padding(horizontal = 25.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = "Slider Enabled")
+        Switch(
+            checked = enabled,
+            onCheckedChange = onEnabledChange
+        )
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
