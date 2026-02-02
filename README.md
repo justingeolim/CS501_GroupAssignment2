@@ -25,3 +25,5 @@ Includes:
 3. A slider enable/disable toggle was added using a Switch component.
 ![img.png](img.png)
 ![img_1.png](img_1.png)
+<img src="img.png" alt="Slider enabled" width="260" />
+<img src="img_1.png" alt="Slider disabled" width="260" />
